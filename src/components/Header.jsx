@@ -54,6 +54,8 @@ function useUserSession(initialUser) {
 
 export default function Header({ initialUser }) {
 
+	console.log("Header initialUser", initialUser);
+
 	const user = useUserSession(initialUser);
 
 	const handleSignOut = event => {
