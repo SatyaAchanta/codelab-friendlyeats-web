@@ -3,15 +3,14 @@
 import "server-only";
 
 import { headers } from "next/headers";
-import { initializeServerApp } from "firebase/app";
+import { initializeApp, initializeServerApp } from "firebase/app";
 
 import { firebaseConfig } from "./config";
 import { getAuth } from "firebase/auth";
 
 export async function getAuthenticatedAppForUser() {
   const idToken = headers().get("Authorization")?.split("Bearer ")[1];
-  console.log('firebaseConfig', JSON.stringify(firebaseConfig));
-  const firebaseServerApp = initializeServerApp(
+  const firebaseServerApp = initializeApp(
     firebaseConfig,
     idToken
       ? {
@@ -20,6 +19,8 @@ export async function getAuthenticatedAppForUser() {
       : {}
   );
 
+  console.log("firebaseServerApp", firebaseServerApp);
+  console.log("firebaseConfig", firebaseConfig);
   const auth = getAuth(firebaseServerApp);
   await auth.authStateReady();
 
