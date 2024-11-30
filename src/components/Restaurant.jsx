@@ -41,7 +41,7 @@ export default function Restaurant({
     }
 
     const imageURL = await updateRestaurantImage(id, image);
-    setRestaurantDetails({ ...restaurant, photo: imageURL });
+    setRestaurantDetails({ ...restaurantDetails, photo: imageURL });
   }
 
   const handleClose = () => {

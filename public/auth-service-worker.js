@@ -1,6 +1,6 @@
 (() => {
   // node_modules/@firebase/util/dist/index.esm2017.js
-  var stringToByteArray$1 = function(str) {
+  var stringToByteArray$1 = function (str) {
     const out = [];
     let p = 0;
     for (let i = 0; i < str.length; i++) {
@@ -24,7 +24,7 @@
     }
     return out;
   };
-  var byteArrayToString = function(bytes) {
+  var byteArrayToString = function (bytes) {
     const out = [];
     let pos = 0, c = 0;
     while (pos < bytes.length) {
@@ -176,7 +176,7 @@
       this.init_();
       const charToByteMap = webSafe ? this.charToByteMapWebSafe_ : this.charToByteMap_;
       const output = [];
-      for (let i = 0; i < input.length; ) {
+      for (let i = 0; i < input.length;) {
         const byte1 = charToByteMap[input.charAt(i++)];
         const haveByte2 = i < input.length;
         const byte2 = haveByte2 ? charToByteMap[input.charAt(i)] : 0;
@@ -233,14 +233,14 @@
       this.name = "DecodeBase64StringError";
     }
   };
-  var base64Encode = function(str) {
+  var base64Encode = function (str) {
     const utf8Bytes = stringToByteArray$1(str);
     return base64.encodeByteArray(utf8Bytes, true);
   };
-  var base64urlEncodeWithoutPadding = function(str) {
+  var base64urlEncodeWithoutPadding = function (str) {
     return base64Encode(str).replace(/\./g, "");
   };
-  var base64Decode = function(str) {
+  var base64Decode = function (str) {
     try {
       return base64.decodeString(str, true);
     } catch (e) {
@@ -304,8 +304,8 @@
   }
   function isMobileCordova() {
     return typeof window !== "undefined" && // @ts-ignore Setting up an broadly applicable index signature for Window
-    // just to deal with this case would probably be a bad idea.
-    !!(window["cordova"] || window["phonegap"] || window["PhoneGap"]) && /ios|iphone|ipod|ipad|android|blackberry|iemobile/i.test(getUA());
+      // just to deal with this case would probably be a bad idea.
+      !!(window["cordova"] || window["phonegap"] || window["PhoneGap"]) && /ios|iphone|ipod|ipad|android|blackberry|iemobile/i.test(getUA());
   }
   function isCloudflareWorker() {
     return typeof navigator !== "undefined" && navigator.userAgent === "Cloudflare-Workers";
@@ -621,7 +621,7 @@
   // node_modules/@firebase/logger/dist/esm/index.esm2017.js
   var instances = [];
   var LogLevel;
-  (function(LogLevel2) {
+  (function (LogLevel2) {
     LogLevel2[LogLevel2["DEBUG"] = 0] = "DEBUG";
     LogLevel2[LogLevel2["VERBOSE"] = 1] = "VERBOSE";
     LogLevel2[LogLevel2["INFO"] = 2] = "INFO";
@@ -828,19 +828,19 @@
   }
   function wrapFunction(func) {
     if (func === IDBDatabase.prototype.transaction && !("objectStoreNames" in IDBTransaction.prototype)) {
-      return function(storeNames, ...args) {
+      return function (storeNames, ...args) {
         const tx = func.call(unwrap(this), storeNames, ...args);
         transactionStoreNamesMap.set(tx, storeNames.sort ? storeNames.sort() : [storeNames]);
         return wrap(tx);
       };
     }
     if (getCursorAdvanceMethods().includes(func)) {
-      return function(...args) {
+      return function (...args) {
         func.apply(unwrap(this), args);
         return wrap(cursorRequestMap.get(this));
       };
     }
-    return function(...args) {
+    return function (...args) {
       return wrap(func.apply(unwrap(this), args));
     };
   }
@@ -912,7 +912,7 @@
     ) {
       return;
     }
-    const method = async function(storeName, ...args) {
+    const method = async function (storeName, ...args) {
       const tx = this.transaction(storeName, isWrite ? "readwrite" : "readonly");
       let target2 = tx.store;
       if (useIndex)
@@ -1494,11 +1494,11 @@
   }
   function _isOnline() {
     if (typeof navigator !== "undefined" && navigator && "onLine" in navigator && typeof navigator.onLine === "boolean" && // Apply only for traditional web apps and Chrome extensions.
-    // This is especially true for Cordova apps which have unreliable
-    // navigator.onLine behavior unless cordova-plugin-network-information is
-    // installed which overwrites the native navigator.onLine value and
-    // defines navigator.connection.
-    (_isHttpOrHttps() || isBrowserExtension() || "connection" in navigator)) {
+      // This is especially true for Cordova apps which have unreliable
+      // navigator.onLine behavior unless cordova-plugin-network-information is
+      // installed which overwrites the native navigator.onLine value and
+      // defines navigator.connection.
+      (_isHttpOrHttps() || isBrowserExtension() || "connection" in navigator)) {
       return navigator.onLine;
     }
     return true;
@@ -6641,10 +6641,12 @@
       }
       const oldAuthToken = oldEntry.authToken;
       if (hasAuthTokenRequestTimedOut(oldAuthToken)) {
-        return Object.assign(Object.assign({}, oldEntry), { authToken: {
-          requestStatus: 0
-          /* RequestStatus.NOT_STARTED */
-        } });
+        return Object.assign(Object.assign({}, oldEntry), {
+          authToken: {
+            requestStatus: 0
+            /* RequestStatus.NOT_STARTED */
+          }
+        });
       }
       return oldEntry;
     });
@@ -6659,10 +6661,12 @@
       if (isServerError(e) && (e.customData.serverCode === 401 || e.customData.serverCode === 404)) {
         await remove(installations.appConfig);
       } else {
-        const updatedInstallationEntry = Object.assign(Object.assign({}, installationEntry), { authToken: {
-          requestStatus: 0
-          /* RequestStatus.NOT_STARTED */
-        } });
+        const updatedInstallationEntry = Object.assign(Object.assign({}, installationEntry), {
+          authToken: {
+            requestStatus: 0
+            /* RequestStatus.NOT_STARTED */
+          }
+        });
         await set(installations.appConfig, updatedInstallationEntry);
       }
       throw e;
@@ -6784,7 +6788,6 @@
   var firebaseConfig;
   self.addEventListener("install", (event) => {
     const serializedFirebaseConfig = new URL(location).searchParams.get("firebaseConfig");
-    console.log("serializedFirebaseConfig", serializedFirebaseConfig);
     if (!serializedFirebaseConfig) {
       throw new Error("Firebase Config object not found in service worker query string.");
     }
